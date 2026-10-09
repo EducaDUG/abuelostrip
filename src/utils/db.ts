@@ -167,7 +167,7 @@ export const INITIAL_FAMILY_JOURNAL_ENTRIES: JournalEntry[] = [
     date: '2026-10-22',
     title: '¡Bienvenidos a Nueva Zelanda, queridos abuelos!',
     content: 'Qué emoción ver que ya habéis aterrizado en Auckland. Esperamos que el vuelo de 15h se haya hecho llevadero. Recordad beber mucha agua, caminar despacito por Viaduct Harbour y tomaros un buen café Flat White. ¡Os queremos muchísimo!',
-    author: 'Toda la familia',
+    author: 'Toda la familia y la comunidad',
     mood: 'radiant',
     createdAt: Date.now() - 100000000
   },
@@ -175,7 +175,7 @@ export const INITIAL_FAMILY_JOURNAL_ENTRIES: JournalEntry[] = [
     id: 'entry-2',
     date: '2026-10-30',
     title: 'Recuerdos desde Milford Sound',
-    content: 'Papá y mamá, tenéis que fijaros bien en las cascadas gigantes de Mitre Peak. Llevad la chaquetilla impermeable a mano por la bruma. ¡Disfrutad del fiordo más bonito del mundo!',
+    content: 'Padre Borque y Capellan Dailos, tenéis que fijaros bien en las cascadas gigantes de Mitre Peak. Llevad la chaquetilla impermeable a mano por la bruma. ¡Disfrutad del fiordo más bonito del mundo!',
     author: 'Vuestros hijos y nietos',
     mood: 'adventurous',
     createdAt: Date.now() - 50000000

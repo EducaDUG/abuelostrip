@@ -4,6 +4,7 @@
  */
 
 import { TripDay, FlightSegment, WorldRegionId } from '../types';
+import { FAITH_ACTIVITIES } from './faithActivities';
 
 export const FLIGHTS: FlightSegment[] = [
   {
@@ -324,7 +325,7 @@ export const REGIONS_META: Record<WorldRegionId, RegionMeta> = {
   },
 };
 
-export const TRIP_DAYS: TripDay[] = [
+const BASE_TRIP_DAYS: TripDay[] = [
   {
     dayNumber: 1,
     date: '2026-10-20',
@@ -2261,6 +2262,11 @@ export const TRIP_DAYS: TripDay[] = [
     recommendedRestTimeHours: 8
   }
 ];
+
+export const TRIP_DAYS: TripDay[] = BASE_TRIP_DAYS.map((day) => ({
+  ...day,
+  attractions: [...day.attractions, ...(FAITH_ACTIVITIES[day.dayNumber] || [])],
+}));
 
 export const INITIAL_LUGGAGE: { name: string; weightKg: number; category: any; packed: boolean; notes?: string }[] = [
   { name: 'Ropa cómoda de viaje y chaquetas ligeras cortaviento', weightKg: 6.5, category: 'clothing', packed: true, notes: 'Ideal para capas en Nueva Zelanda y Bakú' },

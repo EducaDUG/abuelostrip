@@ -25,14 +25,14 @@ export const GameTutorialModal: React.FC<GameTutorialModalProps> = ({ isOpen, on
       icon: '🌍',
       visual: (
         <div className="flex items-center justify-center gap-4 py-4">
-          <div className="w-20 h-20 rounded-2xl bg-amber-500/20 border-2 border-amber-400 flex flex-col items-center justify-center text-3xl shadow-lg shadow-amber-500/10 animate-bounce">
+          <div className="w-24 h-24 rounded-2xl bg-amber-500/20 border-2 border-amber-400 flex flex-col items-center justify-center text-3xl shadow-lg shadow-amber-500/10 animate-bounce">
             👴
-            <span className="text-[10px] font-bold text-amber-300 font-mono mt-0.5">Manolo</span>
+            <span className="text-[10px] font-bold text-amber-300 font-mono mt-0.5">Padre Borque</span>
           </div>
           <span className="text-2xl text-slate-500 font-bold">+</span>
-          <div className="w-20 h-20 rounded-2xl bg-pink-500/20 border-2 border-pink-400 flex flex-col items-center justify-center text-3xl shadow-lg shadow-pink-500/10 animate-bounce delay-150">
-            👵
-            <span className="text-[10px] font-bold text-pink-300 font-mono mt-0.5">Carmen</span>
+          <div className="w-24 h-24 rounded-2xl bg-sky-500/20 border-2 border-sky-400 flex flex-col items-center justify-center text-3xl shadow-lg shadow-sky-500/10 animate-bounce delay-150">
+            🙏
+            <span className="text-[10px] font-bold text-sky-300 font-mono mt-0.5">Capellan Dailos</span>
           </div>
         </div>
       ),

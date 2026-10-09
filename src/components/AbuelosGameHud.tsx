@@ -130,35 +130,35 @@ export const AbuelosGameHud: React.FC<AbuelosGameHudProps> = ({
   const getAbuelosDialogue = () => {
     if (gameState.hangover) {
       return {
-        speaker: 'Manolo 🤕',
-        quote: '¡Uff, qué resaca! Carmen, dame un café y un ibuprofeno.',
+        speaker: 'Padre Borque 🤕',
+        quote: '¡Uff, qué resaca! Capellan Dailos, dame un café y un ibuprofeno.',
         mood: 'resaca',
       };
     }
     if (gameState.drunkenness >= 45) {
       return {
-        speaker: 'Manolo 🍺',
+        speaker: 'Padre Borque 🍺',
         quote: '¡Qué rica la cerveza kiwi! ¡A disfrutar del viaje!',
         mood: 'alegre',
       };
     }
     if (gameState.hunger >= 70) {
       return {
-        speaker: 'Carmen 🤤',
+        speaker: 'Capellan Dailos 🤤',
         quote: '¡Tengo mucha hambre! Paremos a comer antes de seguir.',
         mood: 'hambre',
       };
     }
     if (gameState.vitality <= 25) {
       return {
-        speaker: 'Manolo 😫',
+        speaker: 'Padre Borque 😫',
         quote: 'Cansancio total. Hora de recargar pilas comiendo.',
         mood: 'cansado',
       };
     }
     if (gameState.joyIndex >= 90) {
       return {
-        speaker: 'Carmen 😊',
+        speaker: 'Capellan Dailos 😊',
         quote: '¡Qué paisaje tan bonito! Estamos disfrutando a tope.',
         mood: 'feliz',
       };
@@ -332,6 +332,23 @@ export const AbuelosGameHud: React.FC<AbuelosGameHudProps> = ({
     );
   };
 
+  // ACTION 6: Oración / Misa
+  const handlePray = () => {
+    audioEngine.playCoinReward();
+    onUpdateGameState((prev) => ({
+      ...prev,
+      coins: prev.coins + 20,
+      joyIndex: Math.min(100, prev.joyIndex + 20),
+      vitality: Math.min(100, prev.vitality + 10),
+      completedQuests: Array.from(new Set([...prev.completedQuests, `pray-${currentDay.dayNumber}`])),
+    }));
+
+    showTempAlert(
+      'success',
+      '🙏 Padre Borque y Capellan Dailos rezan juntos con calma. ¡Paz en el corazón, +$20 NZD y energía renovada!'
+    );
+  };
+
   // Quests for the day
   const dailyQuests: { id: string; title: string; desc: string; icon: string; reward: number; done: boolean }[] = [
     {
@@ -365,6 +382,14 @@ export const AbuelosGameHud: React.FC<AbuelosGameHudProps> = ({
       icon: '🐑',
       reward: 15,
       done: gameState.completedQuests.includes(`sheep-${currentDay.dayNumber}`),
+    },
+    {
+      id: `pray-${currentDay.dayNumber}`,
+      title: 'Rezar o asistir a misa',
+      desc: 'Un momento de oración, Eucaristía o visita a una iglesia del lugar.',
+      icon: '🙏',
+      reward: 20,
+      done: gameState.completedQuests.includes(`pray-${currentDay.dayNumber}`),
     },
   ];
 
@@ -721,6 +746,20 @@ export const AbuelosGameHud: React.FC<AbuelosGameHudProps> = ({
                           <span className="font-semibold text-[11px] block text-white">Acariciar Oveja</span>
                           <span className="text-[9px] text-slate-400 block leading-tight">
                             Gana +$15 NZD · Alegría +15
+                          </span>
+                        </div>
+                      </button>
+
+                      {/* Rezar / Misa */}
+                      <button
+                        onClick={handlePray}
+                        className="col-span-2 p-2 rounded-xl bg-sky-900/50 hover:bg-sky-900/70 border border-sky-700 hover:border-sky-400/60 text-slate-200 transition-all text-left flex items-start gap-1.5 active:scale-[0.98]"
+                      >
+                        <span className="text-sm shrink-0">🙏</span>
+                        <div>
+                          <span className="font-semibold text-[11px] block text-white">Rezar / Asistir a Misa</span>
+                          <span className="text-[9px] text-slate-400 block leading-tight">
+                            Gana +$20 NZD · Alegría +20 · Energía +10
                           </span>
                         </div>
                       </button>

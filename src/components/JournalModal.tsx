@@ -115,7 +115,7 @@ export const JournalModal: React.FC<JournalModalProps> = ({
               />
               <input
                 type="text"
-                placeholder="Firma / De quién (ej. Carmen y nietos)"
+                placeholder="Firma / De quién (ej. Familia y amigos)"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 className="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-400"
