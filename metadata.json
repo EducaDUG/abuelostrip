@@ -1,0 +1,6 @@
+{
+  "name": "Abuelos Trip",
+  "description": "Interactive 3D sandbox simulation, living diorama, and digital twin game of the grandparents' 2026 world journey.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
