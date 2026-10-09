@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+/* Phone layout: floating panels become one bottom sheet at a time (see App.tsx) */
+@media (max-width: 767px) {
+  .m-sheet > .absolute {
+    position: relative !important;
+    inset: auto !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+  .m-hide > .absolute {
+    display: none !important;
+  }
+  .fixed.inset-0 > div {
+    max-height: 92dvh;
+    overflow-y: auto;
+  }
+}

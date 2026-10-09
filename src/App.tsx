@@ -44,6 +44,25 @@ import { GameTutorialModal } from './components/GameTutorialModal';
 export default function App() {
   const [gameState, setGameState] = useState<AbuelosGameState>(DEFAULT_INITIAL_STATE);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+  const [mobilePanel, setMobilePanel] = useState<'game' | 'day' | 'sandbox' | 'twin' | null>(null);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const onChange = () => setIsMobile(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  const panelWrap = (name: 'game' | 'day' | 'sandbox' | 'twin') =>
+    !isMobile
+      ? 'contents'
+      : mobilePanel === name
+        ? 'm-sheet absolute bottom-0 inset-x-0 z-30 max-h-[65%] overflow-y-auto'
+        : 'm-hide contents';
+  const openMobilePanel = (name: 'game' | 'day' | 'sandbox' | 'twin') => {
+    setMobilePanel((cur) => (cur === name ? null : name));
+    if (name === 'sandbox') setIsSandboxToolboxOpen(true);
+    if (name === 'twin') setIsDigitalTwinOpen(true);
+  };
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
 
   // Modals & Overlay state
@@ -289,7 +308,7 @@ export default function App() {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col bg-slate-950 text-slate-100 overflow-hidden font-sans select-none">
+    <div className="w-screen h-dvh flex flex-col bg-slate-950 text-slate-100 overflow-hidden font-sans select-none">
       {/* 1. Header Navigation Bar */}
       <TopBar
         activeTab={activeTab}
@@ -339,6 +358,7 @@ export default function App() {
         />
 
         {/* Video Game Mode HUD: Ritmo del Viaje, Cerveza, Resaca, Hambre, Monte */}
+        <div className={panelWrap('game')}>
         <AbuelosGameHud
           gameState={gameState}
           onUpdateGameState={(updater) => setGameState(updater)}
@@ -347,8 +367,10 @@ export default function App() {
           onTakeSnapshot={handleTakeSnapshot}
           onOpenTutorial={() => setIsTutorialOpen(true)}
         />
+        </div>
 
         {/* Floating Sandbox Toolbox */}
+        <div className={panelWrap('sandbox')}>
         <SandboxToolbox
           currentRegionId={currentDay.regionId}
           activePlacementType={sandboxPlaceType}
@@ -364,22 +386,47 @@ export default function App() {
           isOpen={isSandboxToolboxOpen}
           onToggleOpen={() => setIsSandboxToolboxOpen(!isSandboxToolboxOpen)}
         />
+        </div>
 
         {/* Floating Digital Twin Telemetry Panel */}
+        <div className={panelWrap('twin')}>
         <DigitalTwinPanel
           report={twinReport}
           currentDay={currentDay}
           isOpen={isDigitalTwinOpen}
           onToggleOpen={() => setIsDigitalTwinOpen(!isDigitalTwinOpen)}
         />
+        </div>
 
         {/* Floating Day Summary Card */}
+        <div className={panelWrap('day')}>
         <DayDetailsCard
           day={currentDay}
           onSelectAttraction={setSelectedAttraction}
           onOpenFoodTasting={() => setIsFoodModalOpen(true)}
         />
+        </div>
       </main>
+
+      {/* Mobile panel switcher */}
+      {isMobile && (
+        <div className="flex items-center justify-around bg-slate-900 border-t border-slate-800 text-[11px] font-medium">
+          {([
+            ['game', '🎮 Juego'],
+            ['day', '📍 Día'],
+            ['sandbox', '🧰 Mapa'],
+            ['twin', '📊 Datos'],
+          ] as const).map(([name, label]) => (
+            <button
+              key={name}
+              onClick={() => openMobilePanel(name)}
+              className={`flex-1 py-2.5 ${mobilePanel === name ? 'text-amber-400 bg-slate-800' : 'text-slate-300'}`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* 3. Bottom Timeline Scrubber */}
       <TimelineBar
